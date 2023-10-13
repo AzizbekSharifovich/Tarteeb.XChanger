@@ -18,7 +18,7 @@ public class OrchestrationService : IOrchestrationService
 
     public OrchestrationService(ISpreadsheetProccesingService spreadsheetProccesingService)
     {
-        validExternalApplicants = new List<ExternalApplicant>();
+        this.validExternalApplicants = new List<ExternalApplicant>();
         this.spreadsheetProccesingService = spreadsheetProccesingService;
 
     }
