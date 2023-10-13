@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tarteeb.XChanger", "Tarteeb.XChanger\Tarteeb.XChanger.csproj", "{21897716-334E-48E9-AF4D-6C0043AE204E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21897716-334E-48E9-AF4D-6C0043AE204E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21897716-334E-48E9-AF4D-6C0043AE204E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21897716-334E-48E9-AF4D-6C0043AE204E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21897716-334E-48E9-AF4D-6C0043AE204E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1187A30F-DFD1-4950-A80B-7986EE177778}
+	EndGlobalSection
+EndGlobal
