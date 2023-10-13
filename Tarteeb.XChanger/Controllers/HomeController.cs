@@ -6,6 +6,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tarteeb.XChanger.Services.Orchestrations.Interfaces;
 
 namespace Tarteeb.XChanger.Controllers;
 
@@ -13,9 +14,10 @@ namespace Tarteeb.XChanger.Controllers;
 [ApiController]
 public class HomeController : ControllerBase
 {
-    public HomeController()
+    private readonly IOrchestrationService orchestrationService;
+    public HomeController(IOrchestrationService orchestrationService)
     {
-        
+        this.orchestrationService = orchestrationService;
     }
 
     [HttpPost]
@@ -25,6 +27,8 @@ public class HomeController : ControllerBase
         file.CopyTo(stream);
         
         stream.Position = 1;
+        orchestrationService.ProccesingImportRequest(stream);
+
         return Ok();
     }
 }
