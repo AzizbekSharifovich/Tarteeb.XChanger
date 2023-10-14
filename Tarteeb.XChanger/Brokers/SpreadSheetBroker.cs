@@ -18,7 +18,7 @@ namespace Tarteeb.XChanger.Brokers
         public List<ExternalApplicant> ReadExternalApplicants(MemoryStream stream)
         {
             var externalApplicants = new List<ExternalApplicant>();
-            int row = 0;
+            int row = 2;
             int column = 1;
             using var excelPackage = new ExcelPackage(stream);
             ExcelWorksheet worksheet =
