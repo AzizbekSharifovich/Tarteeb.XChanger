@@ -6,6 +6,6 @@ namespace Tarteeb.XChanger.Brokers
 {
     public interface ISpreadSheetBroker
     {
-        List<ExternalApplicant> ReadExternalApplicants(MemoryStream stream);
+        List<ExternalApplicantModel> ReadExternalApplicants(MemoryStream stream);
     }
 }

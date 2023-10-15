@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Models;
 
 namespace Tarteeb.XChanger.Services.Foundations.ProccesingService;
@@ -16,7 +15,7 @@ public class SpreadsheetProccesingService : ISpreadsheetProccesingService
     {
         this.spreadsheetService = spreadsheetService;
     }
-    public List<ExternalApplicant> GetExternalApplicants(MemoryStream memoryStream)
+    public List<ExternalApplicantModel> GetExternalApplicants(MemoryStream memoryStream)
     {
         return spreadsheetService.GetApplicants(memoryStream);
     }
