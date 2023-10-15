@@ -25,6 +25,6 @@ public class OrchestrationService : IOrchestrationService
 
     public void ProccesingImportRequest(MemoryStream stream)
     {
-        this.validExternalApplicants = this.spreadsheetProccesingService.GetExternalApplicants(stream);
+        this.validExternalApplicants = spreadsheetProccesingService.GetExternalApplicants(stream);
     }
 }
