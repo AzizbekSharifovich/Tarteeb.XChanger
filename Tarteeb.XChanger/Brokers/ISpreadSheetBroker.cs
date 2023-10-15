@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿//=================================
+// Copyright (c) Tarteeb LLC.
+// Powering True Leadership
+//=================================
+
+using System.Collections.Generic;
 using System.IO;
 using Tarteeb.XChanger.Models;
 
-namespace Tarteeb.XChanger.Brokers
+namespace Tarteeb.XChanger.Brokers;
+
+public interface ISpreadSheetBroker
 {
-    public interface ISpreadSheetBroker
-    {
-        List<ExternalApplicantModel> ReadExternalApplicants(MemoryStream stream);
-    }
+    List<ExternalApplicantModel> ReadExternalApplicants(MemoryStream stream);
 }
