@@ -13,12 +13,12 @@ namespace Tarteeb.XChanger.Services.Orchestrations;
 
 public class OrchestrationService : IOrchestrationService
 {
-    List<ExternalApplicant> validExternalApplicants;
+    List<ExternalApplicantModel> validExternalApplicants;
     private readonly ISpreadsheetProccesingService spreadsheetProccesingService;
 
     public OrchestrationService(ISpreadsheetProccesingService spreadsheetProccesingService)
     {
-        this.validExternalApplicants = new List<ExternalApplicant>();
+        this.validExternalApplicants = new List<ExternalApplicantModel>();
         this.spreadsheetProccesingService = spreadsheetProccesingService;
 
     }

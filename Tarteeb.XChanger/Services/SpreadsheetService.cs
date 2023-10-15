@@ -4,11 +4,6 @@
 //=================================
 
 using System.Collections.Generic;
-//=================================
-// Copyright (c) Tarteeb LLC.
-// Powering True Leadership
-//=================================
-
 using System.IO;
 using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Models;
@@ -22,7 +17,7 @@ public class SpreadsheetService : ISpreadsheetService
     {
         this.spreadSheetBroker = spreadSheetBroker;
     }
-    public List<ExternalApplicant> GetApplicants(MemoryStream stream)
+    public List<ExternalApplicantModel> GetApplicants(MemoryStream stream)
     {
         return spreadSheetBroker.ReadExternalApplicants(stream);
     }

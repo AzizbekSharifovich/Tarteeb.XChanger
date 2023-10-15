@@ -11,5 +11,5 @@ namespace Tarteeb.XChanger.Services.Foundations.ProccesingService;
 
 public interface ISpreadsheetProccesingService
 {
-    List<ExternalApplicant> GetExternalApplicants(MemoryStream memoryStream);
+    List<ExternalApplicantModel> GetExternalApplicants(MemoryStream memoryStream);
 }

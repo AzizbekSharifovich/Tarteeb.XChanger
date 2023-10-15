@@ -15,9 +15,9 @@ namespace Tarteeb.XChanger.Brokers
     {
         static bool IsTrailingFinalRow(int row, int column, ExcelWorksheet worksheet) =>
             String.IsNullOrEmpty(worksheet.Cells[row, column].Value?.ToString());
-        public List<ExternalApplicant> ReadExternalApplicants(MemoryStream stream)
+        public List<ExternalApplicantModel> ReadExternalApplicants(MemoryStream stream)
         {
-            var externalApplicants = new List<ExternalApplicant>();
+            var externalApplicants = new List<ExternalApplicantModel>();
             int row = 2;
             int column = 1;
             using var excelPackage = new ExcelPackage(stream);
@@ -26,7 +26,7 @@ namespace Tarteeb.XChanger.Brokers
 
             while (!IsTrailingFinalRow(row, column, worksheet))
             {
-                var externalApplicant = new ExternalApplicant();
+                var externalApplicant = new ExternalApplicantModel();
 
                 externalApplicant.FirstName = worksheet.Cells[row, column].Value.ToString();
                 externalApplicant.LastName = worksheet.Cells[row, column + 1].Value.ToString();
