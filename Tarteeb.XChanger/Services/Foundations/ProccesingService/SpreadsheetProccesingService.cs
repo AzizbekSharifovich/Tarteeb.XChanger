@@ -11,14 +11,14 @@ using Tarteeb.XChanger.Models;
 namespace Tarteeb.XChanger.Services.Foundations.ProccesingService;
 public class SpreadsheetProccesingService : ISpreadsheetProccesingService
 {
-    private readonly ISpreadSheetBroker spreadSheetBroker;
-    public SpreadsheetProccesingService(ISpreadSheetBroker spreadSheetBroker)
+    private readonly ISpreadsheetService spreadsheetService;
+    public SpreadsheetProccesingService(ISpreadsheetService spreadsheetService)
     {
-        this.spreadSheetBroker = spreadSheetBroker;
+        this.spreadsheetService = spreadsheetService;
     }
     public List<ExternalApplicant> GetExternalApplicants(MemoryStream memoryStream)
     {
-        return spreadSheetBroker.ReadExternalApplicants(memoryStream);
+        return spreadsheetService.GetApplicants(memoryStream);
     }
 }
 
