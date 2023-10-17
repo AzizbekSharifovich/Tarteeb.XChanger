@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Brokers.Loggings;
+using Tarteeb.XChanger.Brokers.Storages;
 using Tarteeb.XChanger.Services;
 using Tarteeb.XChanger.Services.Foundations.ProccesingService;
 using Tarteeb.XChanger.Services.Orchestrations;
@@ -18,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<StorageBroker>();
 builder.Services.AddSingleton<IOrchestrationService, OrchestrationService>();
 builder.Services.AddSingleton<ISpreadsheetProccesingService, SpreadsheetProccesingService>();
 builder.Services.AddSingleton<ISpreadSheetBroker, SpreadSheetBroker>();
