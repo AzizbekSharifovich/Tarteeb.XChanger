@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿//=================================
+// Copyright (c) Tarteeb LLC.
+// Powering True Leadership
+//=================================
+
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace Tarteeb.XChanger.Brokers.Loggings
