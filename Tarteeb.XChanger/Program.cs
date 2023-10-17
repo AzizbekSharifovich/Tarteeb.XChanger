@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tarteeb.XChanger.Brokers;
+using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Services;
 using Tarteeb.XChanger.Services.Foundations.ProccesingService;
 using Tarteeb.XChanger.Services.Orchestrations;
@@ -21,6 +22,7 @@ builder.Services.AddSingleton<IOrchestrationService, OrchestrationService>();
 builder.Services.AddSingleton<ISpreadsheetProccesingService, SpreadsheetProccesingService>();
 builder.Services.AddSingleton<ISpreadSheetBroker, SpreadSheetBroker>();
 builder.Services.AddSingleton<ISpreadsheetService, SpreadsheetService>();
+builder.Services.AddSingleton<ILoggingBroker, LoggingBroker>();
 
 var app = builder.Build();
 
