@@ -4,10 +4,13 @@
 //=================================
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Brokers.Loggings;
+using Tarteeb.XChanger.Entities.Data;
 using Tarteeb.XChanger.Services;
 using Tarteeb.XChanger.Services.Foundations.ProccesingService;
 using Tarteeb.XChanger.Services.Orchestrations;
@@ -15,9 +18,13 @@ using Tarteeb.XChanger.Services.Orchestrations.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connection = builder.Configuration.GetConnectionString("Db");
+
+builder.Services.AddDbContext<XChangerDbContext>(options => options.UseSqlite(connection));
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddSingleton<IOrchestrationService, OrchestrationService>();
 builder.Services.AddSingleton<ISpreadsheetProccesingService, SpreadsheetProccesingService>();
 builder.Services.AddSingleton<ISpreadSheetBroker, SpreadSheetBroker>();
