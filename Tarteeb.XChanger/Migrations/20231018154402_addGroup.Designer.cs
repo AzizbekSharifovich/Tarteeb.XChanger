@@ -11,8 +11,8 @@ using Tarteeb.XChanger.Brokers.Storages;
 namespace Tarteeb.XChanger.Migrations
 {
     [DbContext(typeof(StorageBroker))]
-    [Migration("20231017153826_addDatabase")]
-    partial class addDatabase
+    [Migration("20231018154402_addGroup")]
+    partial class addGroup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,20 @@ namespace Tarteeb.XChanger.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExternalApplicantModel");
+                });
+
+            modelBuilder.Entity("Tarteeb.XChanger.Models.Group", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("GroupName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Group");
                 });
 #pragma warning restore 612, 618
         }
