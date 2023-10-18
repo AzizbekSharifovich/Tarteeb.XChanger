@@ -8,7 +8,7 @@ using System.IO;
 using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Models;
 
-namespace Tarteeb.XChanger.Services;
+namespace Tarteeb.XChanger.Services.Foundations.SpreadSheet;
 
 public class SpreadsheetService : ISpreadsheetService
 {

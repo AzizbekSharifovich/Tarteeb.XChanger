@@ -6,8 +6,9 @@
 using System.Collections.Generic;
 using System.IO;
 using Tarteeb.XChanger.Models;
+using Tarteeb.XChanger.Services.Foundations.SpreadSheet;
 
-namespace Tarteeb.XChanger.Services.Foundations.ProccesingService;
+namespace Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
 public class SpreadsheetProccesingService : ISpreadsheetProccesingService
 {
     private readonly ISpreadsheetService spreadsheetService;
