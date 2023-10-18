@@ -45,6 +45,20 @@ namespace Tarteeb.XChanger.Migrations
 
                     b.ToTable("ExternalApplicantModel");
                 });
+
+            modelBuilder.Entity("Tarteeb.XChanger.Models.Group", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("GroupName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Group");
+                });
 #pragma warning restore 612, 618
         }
     }
