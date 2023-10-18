@@ -9,10 +9,11 @@ using Microsoft.Extensions.Hosting;
 using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Brokers.Storages;
-using Tarteeb.XChanger.Services;
-using Tarteeb.XChanger.Services.Foundations.ProccesingService;
+using Tarteeb.XChanger.Services.Foundations.Group;
+using Tarteeb.XChanger.Services.Foundations.SpreadSheet;
 using Tarteeb.XChanger.Services.Orchestrations;
-using Tarteeb.XChanger.Services.Orchestrations.Interfaces;
+using Tarteeb.XChanger.Services.Proccesings.Group;
+using Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +21,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StorageBroker>();
+builder.Services.AddSingleton<IStorageBroker, StorageBroker>();
 builder.Services.AddSingleton<IOrchestrationService, OrchestrationService>();
 builder.Services.AddSingleton<ISpreadsheetProccesingService, SpreadsheetProccesingService>();
 builder.Services.AddSingleton<ISpreadSheetBroker, SpreadSheetBroker>();
 builder.Services.AddSingleton<ISpreadsheetService, SpreadsheetService>();
 builder.Services.AddSingleton<ILoggingBroker, LoggingBroker>();
+builder.Services.AddSingleton<IGroupProccesingService, GroupProccesingService>();
+builder.Services.AddSingleton<IGroupService, GroupService>();
 
 var app = builder.Build();
 
