@@ -365,3 +365,5 @@ FodyWeavers.xsd
 /Tarteeb.XChanger/xChanger.db-wal
 /Tarteeb.XChanger/Migrations/20231017153318_addDb.cs
 /Tarteeb.XChanger/Migrations/20231017153318_addDb.Designer.cs
+/Tarteeb.XChanger/xChanger.db-shm
+/Tarteeb.XChanger/xChanger.db-wal
