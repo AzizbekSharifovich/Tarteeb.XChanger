@@ -15,10 +15,10 @@ namespace Tarteeb.XChanger.Brokers.Storages
     {
         public DbSet<ExternalApplicantModel> ExternalApplicantModel { get; set; }
 
-        public async ValueTask<ExternalApplicantModel> InserExternalApplicantModelAsync(ExternalApplicantModel externalApplicantModel) =>
+        public async ValueTask<ExternalApplicantModel> InsertExternalApplicantModelAsync(ExternalApplicantModel externalApplicantModel) =>
             await InsertAsync(externalApplicantModel);
 
-        public IQueryable<ExternalApplicantModel> RetreiveAllExternalAplicantModels() =>
+        public IQueryable<ExternalApplicantModel> RetrieveAllExternalApplicantModels() =>
             SelectAll<ExternalApplicantModel>();
 
         public async ValueTask<ExternalApplicantModel> SelectExternalApplicantModelIdAsync(Guid id) =>

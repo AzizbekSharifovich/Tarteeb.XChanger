@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Tarteeb.XChanger.Models;
+using Tarteeb.XChanger.Services.Proccesings.Applicants;
 using Tarteeb.XChanger.Services.Proccesings.Group;
 using Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
 
@@ -17,14 +18,17 @@ public class OrchestrationService : IOrchestrationService
     List<ExternalApplicantModel> validExternalApplicants;
     private readonly ISpreadsheetProccesingService spreadsheetProccesingService;
     private readonly IGroupProccesingService groupProccesingService;
+    private readonly IApplicantProccesingService applicantProccesingService;
 
     public OrchestrationService(
-        ISpreadsheetProccesingService spreadsheetProccesingService, 
-        IGroupProccesingService groupProccesingService)
+        ISpreadsheetProccesingService spreadsheetProccesingService,
+        IGroupProccesingService groupProccesingService,
+        IApplicantProccesingService applicantProccesingService)
     {
         this.validExternalApplicants = new List<ExternalApplicantModel>();
         this.spreadsheetProccesingService = spreadsheetProccesingService;
         this.groupProccesingService = groupProccesingService;
+        this.applicantProccesingService = applicantProccesingService;
     }
 
     public async void ProccesingImportRequest(MemoryStream stream)
@@ -35,6 +39,7 @@ public class OrchestrationService : IOrchestrationService
         {
             Group ensureGroup = await groupProccesingService.EnsureGroupExistsByName(externalApplicant.GroupName);
             ExternalApplicantModel applicant = MapToApplicant(externalApplicant, ensureGroup);
+            await applicantProccesingService.InsertApplicantAsync(applicant);
 
         }
     }
