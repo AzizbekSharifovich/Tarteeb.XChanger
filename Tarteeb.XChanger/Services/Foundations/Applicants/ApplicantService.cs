@@ -4,15 +4,21 @@
 //=================================
 
 using System.Threading.Tasks;
+using Tarteeb.XChanger.Brokers.Storages;
 using Tarteeb.XChanger.Models;
 
 namespace Tarteeb.XChanger.Services.Foundations.Applicants
 {
     public class ApplicantService : IApplicantService
     {
-        public ValueTask<ExternalApplicantModel> InsertApplicantAsync(ExternalApplicantModel externalApplicantModel)
+        private readonly IStorageBroker storageBroker;
+
+        public ApplicantService(IStorageBroker storageBroker)
         {
-            throw new System.NotImplementedException();
+            this.storageBroker = storageBroker;
         }
+
+        public async ValueTask<ExternalApplicantModel> InsertApplicantAsync(ExternalApplicantModel externalApplicantModel) =>
+            await storageBroker.InsertExternalApplicantModelAsync(externalApplicantModel);
     }
 }

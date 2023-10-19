@@ -10,6 +10,6 @@ namespace Tarteeb.XChanger.Services.Proccesings.Applicants
 {
     public interface IApplicantProccesingService
     {
-        ValueTask<ExternalApplicantModel> InsertApplicantAsync(ExternalApplicantModel externalApplicantModel)
+        ValueTask<ExternalApplicantModel> InsertApplicantAsync(ExternalApplicantModel externalApplicantModel);
     }
 }

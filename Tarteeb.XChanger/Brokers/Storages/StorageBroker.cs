@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using EFxceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Tarteeb.XChanger.Models;
 
 namespace Tarteeb.XChanger.Brokers.Storages
 {
@@ -69,6 +70,5 @@ namespace Tarteeb.XChanger.Brokers.Storages
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             optionsBuilder.UseSqlite(connectionString);
         }
-
     }
 }
