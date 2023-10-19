@@ -35,6 +35,7 @@ public class OrchestrationService : IOrchestrationService
         {
             Group ensureGroup = await groupProccesingService.EnsureGroupExistsByName(externalApplicant.GroupName);
             ExternalApplicantModel applicant = MapToApplicant(externalApplicant, ensureGroup);
+
         }
     }
 

@@ -9,9 +9,11 @@ using Microsoft.Extensions.Hosting;
 using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Brokers.Storages;
+using Tarteeb.XChanger.Services.Foundations.Applicants;
 using Tarteeb.XChanger.Services.Foundations.Group;
 using Tarteeb.XChanger.Services.Foundations.SpreadSheet;
 using Tarteeb.XChanger.Services.Orchestrations;
+using Tarteeb.XChanger.Services.Proccesings.Applicants;
 using Tarteeb.XChanger.Services.Proccesings.Group;
 using Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
 
@@ -29,6 +31,8 @@ builder.Services.AddSingleton<ISpreadsheetService, SpreadsheetService>();
 builder.Services.AddSingleton<ILoggingBroker, LoggingBroker>();
 builder.Services.AddSingleton<IGroupProccesingService, GroupProccesingService>();
 builder.Services.AddSingleton<IGroupService, GroupService>();
+builder.Services.AddSingleton<IApplicantProccesingService, ApplicantProccesingService>();
+builder.Services.AddSingleton<IApplicantService, ApplicantService>();
 
 var app = builder.Build();
 
