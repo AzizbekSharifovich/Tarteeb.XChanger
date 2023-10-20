@@ -10,7 +10,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
 {
     public interface IGroupService
     {
-        Task<Models.Group> AddGroupAsyc(Models.Group group);
-        IQueryable<Models.Group> RetrieveAllGroups();
+        Task<Models.Foundations.Groups.Group> AddGroupAsyc(Models.Foundations.Groups.Group group);
+        IQueryable<Models.Foundations.Groups.Group> RetrieveAllGroups();
     }
 }

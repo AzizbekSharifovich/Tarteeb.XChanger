@@ -9,7 +9,7 @@ namespace Tarteeb.XChanger.Services.Proccesings.Group
 {
     public interface IGroupProccesingService
     {
-        ValueTask<Models.Group> EnsureGroupExistsByName(string name);
-        Models.Group RetrieveGroupByName(string name);
+        ValueTask<Models.Foundations.Groups.Group> EnsureGroupExistsByName(string name);
+        Models.Foundations.Groups.Group RetrieveGroupByName(string name);
     }
 }

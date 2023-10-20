@@ -6,7 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Tarteeb.XChanger.Models;
+using Tarteeb.XChanger.Models.Foundations.Applicants;
+using Tarteeb.XChanger.Models.Foundations.Groups;
 using Tarteeb.XChanger.Services.Proccesings.Applicants;
 using Tarteeb.XChanger.Services.Proccesings.Group;
 using Tarteeb.XChanger.Services.Proccesings.SpreadSheet;

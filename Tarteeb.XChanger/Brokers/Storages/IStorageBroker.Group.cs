@@ -6,7 +6,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Tarteeb.XChanger.Models;
+using Tarteeb.XChanger.Models.Foundations.Groups;
 
 namespace Tarteeb.XChanger.Brokers.Storages
 {

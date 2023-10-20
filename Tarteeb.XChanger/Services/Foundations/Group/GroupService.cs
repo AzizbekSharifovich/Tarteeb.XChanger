@@ -18,10 +18,10 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
             this.storageBroker = storageBroker;
         }
 
-        public async Task<Models.Group> AddGroupAsyc(Models.Group group) =>
+        public async Task<Models.Foundations.Groups.Group> AddGroupAsyc(Models.Foundations.Groups.Group group) =>
             await storageBroker.InsertGroupAsync(group);
 
-        public IQueryable<Models.Group> RetrieveAllGroups() =>
+        public IQueryable<Models.Foundations.Groups.Group> RetrieveAllGroups() =>
              storageBroker.RetrieveAllGroups(); 
     }
 }
