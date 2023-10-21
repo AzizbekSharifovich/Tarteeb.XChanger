@@ -37,8 +37,6 @@ public partial class SpreadsheetProccesingService : ISpreadsheetProccesingServic
                 externalApplicantModels.Remove(externalAplicant);
             }
         });
-
-
         return externalApplicantModels;
     });
 }

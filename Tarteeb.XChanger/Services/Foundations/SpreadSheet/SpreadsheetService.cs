@@ -36,6 +36,4 @@ public partial class SpreadsheetService : ISpreadsheetService
             throw new NullSpreadSheetException();
         }
     }
-
- 
 }
