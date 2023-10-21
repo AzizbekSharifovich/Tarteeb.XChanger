@@ -6,6 +6,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Tarteeb.XChanger.Models.Foundations.Groups;
 using Tarteeb.XChanger.Services.Foundations.Group;
 
 namespace Tarteeb.XChanger.Services.Proccesings.Group
@@ -19,16 +20,16 @@ namespace Tarteeb.XChanger.Services.Proccesings.Group
             this.groupService = groupService;
         }
 
-        public async ValueTask<Models.Group> EnsureGroupExistsByName(string name)
+        public async ValueTask<Models.Foundations.Groups.Group> EnsureGroupExistsByName(string name)
         {
-            Models.Group maybeGroup = RetrieveGroupByName(name);
+            Models.Foundations.Groups.Group maybeGroup = RetrieveGroupByName(name);
 
             return maybeGroup is null ? await AddGroupAsync(name) : maybeGroup;
         }
 
-        private async ValueTask<Models.Group> AddGroupAsync(string name)
+        private async ValueTask<Models.Foundations.Groups.Group> AddGroupAsync(string name)
         {
-            Models.Group group = new Models.Group();
+            Models.Foundations.Groups.Group group = new Models.Foundations.Groups.Group();
 
             group.Id = Guid.NewGuid();
             group.GroupName = name;
@@ -36,10 +37,10 @@ namespace Tarteeb.XChanger.Services.Proccesings.Group
             return await groupService.AddGroupAsyc(group);
         }
 
-        public Models.Group RetrieveGroupByName(string name)
+        public Models.Foundations.Groups.Group RetrieveGroupByName(string name)
         {
-            IQueryable<Models.Group> Groups = groupService.RetrieveAllGroups();
-            Models.Group group = Groups.FirstOrDefault(groupName => groupName.GroupName == name);
+            IQueryable<Models.Foundations.Groups.Group> Groups = groupService.RetrieveAllGroups();
+            Models.Foundations.Groups.Group group = Groups.FirstOrDefault(groupName => groupName.GroupName == name);
             return group;
         }
     }

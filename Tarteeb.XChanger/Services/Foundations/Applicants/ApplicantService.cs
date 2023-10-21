@@ -5,7 +5,7 @@
 
 using System.Threading.Tasks;
 using Tarteeb.XChanger.Brokers.Storages;
-using Tarteeb.XChanger.Models;
+using Tarteeb.XChanger.Models.Foundations.Applicants;
 
 namespace Tarteeb.XChanger.Services.Foundations.Applicants
 {

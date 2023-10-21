@@ -5,20 +5,39 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Tarteeb.XChanger.Models;
+using Tarteeb.XChanger.Brokers.Loggings;
+using Tarteeb.XChanger.Models.Foundations.Applicants;
+using Tarteeb.XChanger.Models.Proccesings.SpreadSheet.Exceptions;
 using Tarteeb.XChanger.Services.Foundations.SpreadSheet;
 
 namespace Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
-public class SpreadsheetProccesingService : ISpreadsheetProccesingService
+public partial class SpreadsheetProccesingService : ISpreadsheetProccesingService
 {
     private readonly ISpreadsheetService spreadsheetService;
-    public SpreadsheetProccesingService(ISpreadsheetService spreadsheetService)
+    private readonly ILoggingBroker loggingBroker;
+    public SpreadsheetProccesingService(ISpreadsheetService spreadsheetService, ILoggingBroker loggingBroker)
     {
         this.spreadsheetService = spreadsheetService;
+        this.loggingBroker = loggingBroker;
     }
-    public List<ExternalApplicantModel> GetExternalApplicants(MemoryStream memoryStream)
+    public List<ExternalApplicantModel> GetExternalApplicants(MemoryStream memoryStream) =>
+    TryCatch(() =>
     {
-        return spreadsheetService.GetApplicants(memoryStream);
-    }
+        List<ExternalApplicantModel> externalApplicantModels = spreadsheetService.GetApplicants(memoryStream);
+
+        ValidateExternalApplicantNotEmpty(externalApplicantModels);
+
+        externalApplicantModels.ForEach(externalAplicant =>
+        {
+            if (string.IsNullOrWhiteSpace(externalAplicant.FirstName)
+                || string.IsNullOrWhiteSpace(externalAplicant.PhoneNumber)
+                || string.IsNullOrWhiteSpace(externalAplicant.LastName)
+                || string.IsNullOrWhiteSpace(externalAplicant.GroupName))
+            {
+                externalApplicantModels.Remove(externalAplicant);
+            }
+        });
+        return externalApplicantModels;
+    });
 }
 
