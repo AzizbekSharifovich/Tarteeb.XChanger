@@ -4,10 +4,11 @@
 //=================================
 
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Tarteeb.XChanger.Services.Orchestrations;
 
 public interface IOrchestrationService
 {
-    void ProccesingImportRequest(MemoryStream stream);
+    Task ProccesingImportRequest(MemoryStream stream);
 }

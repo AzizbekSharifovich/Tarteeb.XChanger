@@ -24,15 +24,19 @@ namespace Tarteeb.XChanger.Services.Proccesings.SpreadSheet
             }
             catch (SpreadSheetValidationException spreadSheetValidationException)
             {
+                throw CreateAndLogValidationException(spreadSheetValidationException.InnerException as Xeption);
+            }
 
-                throw CreateAndLogValidationException(spreadSheetValidationException);
+            catch(EmptyExternalApplicantException emptyExternalApplicantException)
+            {
+                throw CreateAndLogValidationException(emptyExternalApplicantException);
             }
         }
 
         private SpreadSheetProccesingValidationException CreateAndLogValidationException(Xeption xeption)
         {
             var spreadSheetProccesingValidationException = 
-                new SpreadSheetProccesingValidationException(xeption.InnerException as Xeption);
+                new SpreadSheetProccesingValidationException(xeption);
 
             this.loggingBroker.LogError(spreadSheetProccesingValidationException);
 

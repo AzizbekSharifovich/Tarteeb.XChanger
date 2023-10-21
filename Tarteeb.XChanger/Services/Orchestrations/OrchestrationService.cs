@@ -6,6 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 using Tarteeb.XChanger.Models.Foundations.Groups;
 using Tarteeb.XChanger.Services.Proccesings.Applicants;
@@ -14,25 +16,29 @@ using Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
 
 namespace Tarteeb.XChanger.Services.Orchestrations;
 
-public class OrchestrationService : IOrchestrationService
+public partial class OrchestrationService : IOrchestrationService
 {
     List<ExternalApplicantModel> validExternalApplicants;
     private readonly ISpreadsheetProccesingService spreadsheetProccesingService;
     private readonly IGroupProccesingService groupProccesingService;
     private readonly IApplicantProccesingService applicantProccesingService;
+    private readonly ILoggingBroker loggingBroker;
 
     public OrchestrationService(
         ISpreadsheetProccesingService spreadsheetProccesingService,
         IGroupProccesingService groupProccesingService,
-        IApplicantProccesingService applicantProccesingService)
+        IApplicantProccesingService applicantProccesingService,
+        ILoggingBroker loggingBroker)
     {
         this.validExternalApplicants = new List<ExternalApplicantModel>();
         this.spreadsheetProccesingService = spreadsheetProccesingService;
         this.groupProccesingService = groupProccesingService;
         this.applicantProccesingService = applicantProccesingService;
+        this.loggingBroker = loggingBroker;
     }
 
-    public async void ProccesingImportRequest(MemoryStream stream)
+    public Task ProccesingImportRequest(MemoryStream stream) =>
+    TryCatch(async () =>
     {
         this.validExternalApplicants = spreadsheetProccesingService.GetExternalApplicants(stream);
 
@@ -43,7 +49,7 @@ public class OrchestrationService : IOrchestrationService
             await applicantProccesingService.InsertApplicantAsync(applicant);
 
         }
-    }
+    });
 
     private ExternalApplicantModel MapToApplicant(ExternalApplicantModel externalApplicant, Group ensureGroup)
     {

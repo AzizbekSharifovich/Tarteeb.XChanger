@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
+using Tarteeb.XChanger.Models.Proccesings.SpreadSheet.Exceptions;
 using Tarteeb.XChanger.Services.Foundations.SpreadSheet;
 
 namespace Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
@@ -24,11 +25,14 @@ public partial class SpreadsheetProccesingService : ISpreadsheetProccesingServic
     {
         List<ExternalApplicantModel> externalApplicantModels = spreadsheetService.GetApplicants(memoryStream);
 
+        ValidateExternalApplicantNotEmpty(externalApplicantModels);
+
         externalApplicantModels.ForEach(externalAplicant =>
         {
-            if(string.IsNullOrWhiteSpace(externalAplicant.FirstName) 
-            || string.IsNullOrWhiteSpace(externalAplicant.PhoneNumber)
-            || string.IsNullOrWhiteSpace(externalAplicant.LastName))
+            if (string.IsNullOrWhiteSpace(externalAplicant.FirstName)
+                || string.IsNullOrWhiteSpace(externalAplicant.PhoneNumber)
+                || string.IsNullOrWhiteSpace(externalAplicant.LastName)
+                || string.IsNullOrWhiteSpace(externalAplicant.GroupName))
             {
                 externalApplicantModels.Remove(externalAplicant);
             }
