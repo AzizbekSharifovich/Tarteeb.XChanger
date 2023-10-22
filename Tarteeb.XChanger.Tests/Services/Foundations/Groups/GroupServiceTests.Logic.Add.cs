@@ -11,7 +11,7 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
     public partial class GroupServiceTests
     {
         [Fact]
-        public async Task ShouldAddGroupAsycn()
+        public async Task ShouldAddGroupAsync()
         {
             //given
             ApplicantGroup randomGroup = CreateRandomGroup();

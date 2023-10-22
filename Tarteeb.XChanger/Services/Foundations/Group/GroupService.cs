@@ -28,7 +28,11 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
         }
 
         public ValueTask<ApplicantsGroup> AddGroupAsyc(ApplicantsGroup group) =>
-            throw new NotImplementedException();
+        TryCatch(async() =>
+        {
+            ValidateGroupIsNotNull(group);
+            return await storageBroker.InsertGroupAsync(group);
+        });
 
         public IQueryable<ApplicantsGroup> RetrieveAllGroups() =>
               TryCatch(() => storageBroker.RetrieveAllGroups());
