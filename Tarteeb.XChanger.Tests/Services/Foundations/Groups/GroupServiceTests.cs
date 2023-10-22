@@ -3,12 +3,15 @@
 // Powering True Leadership
 //=================================
 
+using System.Linq.Expressions;
 using Moq;
 using Tarteeb.XChanger.Brokers.DateTimes;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Brokers.Storages;
+using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions.Categories;
 using Tarteeb.XChanger.Services.Foundations.Group;
 using Tynamix.ObjectFiller;
+using Xeptions;
 using ApplicantGroup = Tarteeb.XChanger.Models.Foundations.Groups.Group;
 namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
 {
@@ -40,5 +43,9 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
             var filler = new Filler<ApplicantGroup>();
             return filler;
         }
+
+
+        private Expression<Func<Xeption, bool>> SameExceptionAss(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
     }
 }

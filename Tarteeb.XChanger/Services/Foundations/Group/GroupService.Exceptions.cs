@@ -28,7 +28,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
             }
             catch (NullGroupEexception nullGroupException)
             {
-               throw CreateAndLogValidationException(nullGroupException);
+               throw new NotImplementedException();
             }
             catch(InvalidGroupException invalidGroupException)
             {
