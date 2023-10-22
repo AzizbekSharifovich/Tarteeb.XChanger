@@ -118,7 +118,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
             var groupValidationException =
                 new GroupValidationException(xeption); 
 
-            this.loggingBroker.LogError(groupValidationException);
+            //this.loggingBroker.LogError(groupValidationException);
 
             return groupValidationException;
         }

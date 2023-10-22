@@ -46,8 +46,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
 
             Validate(
                 (IsInvalid(group.Id), nameof(ApplicantsGroup.Id)),
-                (IsInvalid(group.GroupName), nameof(ApplicantsGroup.GroupName))
-                );
+                (IsInvalid(group.GroupName), nameof(ApplicantsGroup.GroupName)));
         }
     }
 }
