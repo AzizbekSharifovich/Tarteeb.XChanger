@@ -99,5 +99,47 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnAddIfDbUpdateErrorOccursAndLogItAsync()
+        {
+            //given 
+            ApplicantsGroup randomGroup = CreateRandomGroup();
+
+            DbUpdateException dbUpdateException =
+                new DbUpdateException();
+
+            var failedStorageGroupException =
+                new FailedStorageGroupException(dbUpdateException);
+
+            GroupDependencyException expectedGroupDependencyException =
+                 new GroupDependencyException(failedStorageGroupException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertGroupAsync(randomGroup)).ThrowsAsync(dbUpdateException);
+            //when
+            ValueTask<ApplicantsGroup> addGroupTask =
+                   this.groupService.AddGroupAsyc(randomGroup);
+
+            var actualGroupDependencyException =
+                await Assert.ThrowsAnyAsync<GroupDependencyException>(addGroupTask.AsTask);
+            //then
+
+            actualGroupDependencyException.
+                Should().
+                BeEquivalentTo(expectedGroupDependencyException);
+
+            this.storageBrokerMock.Verify(broker =>
+             broker.InsertGroupAsync(randomGroup), Times.Once);
+
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAss(
+                    expectedGroupDependencyException))), Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
