@@ -37,7 +37,10 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
 
             catch(DuplicateKeyException duplicateKeyException)
             {
-                throw new NotImplementedException();
+                var alreadyExistsGroupException =
+                     new AlreadyExistsGroupException(duplicateKeyException);
+
+                throw CreateAndLogDependencyValidationException(alreadyExistsGroupException);
             }
 
             catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
