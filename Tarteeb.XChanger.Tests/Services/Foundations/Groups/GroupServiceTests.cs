@@ -47,5 +47,8 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
 
         private Expression<Func<Xeption, bool>> SameExceptionAss(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
+
+        private string GetRandomString() =>
+              new MnemonicString().GetValue();
     }
 }
