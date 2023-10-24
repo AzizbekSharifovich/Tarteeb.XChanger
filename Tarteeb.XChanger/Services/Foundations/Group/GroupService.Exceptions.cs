@@ -53,7 +53,10 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
 
             catch(DbUpdateException dbUpdateException)
             {
-                throw new NotImplementedException();
+                var failedStorageGroupException = 
+                    new FailedStorageGroupException(dbUpdateException);
+
+                throw CreateAndLogDependencyException(failedStorageGroupException);
             }
 
             catch(Exception exception)
