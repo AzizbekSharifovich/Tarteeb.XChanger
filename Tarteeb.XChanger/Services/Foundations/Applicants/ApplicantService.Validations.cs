@@ -6,17 +6,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
 {
     public partial class ApplicantService
     {
-        private void ValidateApplicantOnAdd(ExternalApplicantModel externalApplicantModel)
-        {
-            ValidateApplicantNotNull(externalApplicantModel);
-
-            Validate(
-                (Rule: IsInvalid(externalApplicantModel.Id), Parameter: nameof(ExternalApplicantModel.Id)),
-                (Rule: IsInvalid(externalApplicantModel.FirstName), Parameter: nameof(ExternalApplicantModel.FirstName)),
-                (Rule: IsInvalid(externalApplicantModel.LastName), Parameter: nameof(ExternalApplicantModel.LastName)),
-                (Rule: IsInvalid(externalApplicantModel.Email), Parameter: nameof(ExternalApplicantModel.Email)),
-                (Rule: IsInvalid(externalApplicantModel.PhoneNumber), Parameter: nameof(ExternalApplicantModel.PhoneNumber)));
-        }
+       
 
         private static dynamic IsInvalid(Guid applicantId) => new
         {
@@ -43,6 +33,13 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
             {
                 throw new NullApplicantException();
             }
+            Validate(
+                (Rule: IsInvalid(externalApplicantModel.Id), Parameter: nameof(ExternalApplicantModel.Id)),
+                (Rule: IsInvalid(externalApplicantModel.FirstName), Parameter: nameof(ExternalApplicantModel.FirstName)),
+                (Rule: IsInvalid(externalApplicantModel.LastName), Parameter: nameof(ExternalApplicantModel.LastName)),
+                (Rule: IsInvalid(externalApplicantModel.Email), Parameter: nameof(ExternalApplicantModel.Email)),
+                (Rule: IsInvalid(externalApplicantModel.PhoneNumber), Parameter: nameof(ExternalApplicantModel.PhoneNumber)));
+
         }
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
