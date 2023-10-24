@@ -61,10 +61,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
 
             catch(Exception exception)
             {
-                var failedServiceGroupException = 
-                    new FailedServiceGroupException(exception);
-
-                throw CreateServiceException(failedServiceGroupException);
+                throw new NotImplementedException();
             }
         }
 
@@ -82,16 +79,6 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
                 throw CreateServiceException(failedServiceGroupException);
             }
         }
-        private GroupServiceException CreateServiceException(Xeption xeption)
-        {
-            var groupServiceException = 
-                new GroupServiceException(xeption);
-
-            this.loggingBroker.LogError(groupServiceException);
-
-            return groupServiceException;
-        }
-
         private GroupDependencyException CreateAndLogDependencyException(Xeption xeption)
         {
             GroupDependencyException groupDependencyException =
@@ -121,6 +108,15 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
             this.loggingBroker.LogError(groupValidationException);
 
             return groupValidationException;
+        }
+        private GroupServiceException CreateServiceException(Xeption xeption)
+        {
+            var groupServiceException =
+                new GroupServiceException(xeption);
+
+            this.loggingBroker.LogError(groupServiceException);
+
+            return groupServiceException;
         }
     }
 }

@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions.Categories;
-using Tynamix.ObjectFiller;
 using ApplicantsGroup = Tarteeb.XChanger.Models.Foundations.Groups.Group;
 namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
 {
@@ -21,13 +20,13 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
             string someMessage = GetRandomString();
             ApplicantsGroup randomGroup = CreateRandomGroup();
 
-            var duplicateKeyException = 
+            var duplicateKeyException =
                 new DuplicateKeyException(someMessage);
 
             var alreadyExistsGroupException =
                 new AlreadyExistsGroupException(duplicateKeyException);
 
-            var excpectedGroupDependencyValidationException = 
+            var excpectedGroupDependencyValidationException =
                 new GroupDependencyValidationException(alreadyExistsGroupException);
 
             this.storageBrokerMock.Setup(broker =>
@@ -136,6 +135,46 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAss(
                     expectedGroupDependencyException))), Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccursAndLogItAsync()
+        {
+            //given
+            ApplicantsGroup group = CreateRandomGroup();
+
+            var exception = new Exception();
+
+            var failedServiceGroupException =
+                new FailedServiceGroupException(exception);
+
+            var expectedGroupServiceException =
+                new GroupServiceException(failedServiceGroupException);
+
+            this.storageBrokerMock.Setup(broker =>
+               broker.InsertGroupAsync(group)).ThrowsAsync(failedServiceGroupException);
+            //when
+
+            ValueTask<ApplicantsGroup> addGroupTask =
+                this.groupService.AddGroupAsyc(group);
+
+
+            var actualGroupServiceException =
+                await Assert.ThrowsAnyAsync<GroupServiceException>(addGroupTask.AsTask);
+
+            //then
+
+            actualGroupServiceException.Should().BeEquivalentTo(expectedGroupServiceException);
+
+            this.storageBrokerMock.Verify(broker =>
+                 broker.InsertGroupAsync(group), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAss(expectedGroupServiceException))), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
