@@ -5,12 +5,12 @@
 
 using System.Linq;
 using System.Threading.Tasks;
-using ApplicantsGroup = Tarteeb.XChanger.Models.Foundations.Groups.Group;
+
 namespace Tarteeb.XChanger.Services.Foundations.Group
 {
     public interface IGroupService
     {
-        ValueTask<ApplicantsGroup> AddGroupAsyc(ApplicantsGroup group);
-        IQueryable<ApplicantsGroup> RetrieveAllGroups();
+        Task<Models.Foundations.Groups.Group> AddGroupAsyc(Models.Foundations.Groups.Group group);
+        IQueryable<Models.Foundations.Groups.Group> RetrieveAllGroups();
     }
 }

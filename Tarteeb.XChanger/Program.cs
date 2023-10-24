@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tarteeb.XChanger.Brokers;
-using Tarteeb.XChanger.Brokers.DateTimes;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Brokers.Storages;
 using Tarteeb.XChanger.Services.Foundations.Applicants;
@@ -34,7 +33,6 @@ builder.Services.AddSingleton<IGroupProccesingService, GroupProccesingService>()
 builder.Services.AddSingleton<IGroupService, GroupService>();
 builder.Services.AddSingleton<IApplicantProccesingService, ApplicantProccesingService>();
 builder.Services.AddSingleton<IApplicantService, ApplicantService>();
-builder.Services.AddSingleton<IDateTimeBroker, DateTimeBroker>();
 
 var app = builder.Build();
 
