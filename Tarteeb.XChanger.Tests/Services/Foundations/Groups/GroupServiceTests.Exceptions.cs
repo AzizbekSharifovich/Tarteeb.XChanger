@@ -4,6 +4,7 @@
 //=================================
 using EFxceptions.Models.Exceptions;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions.Categories;
@@ -16,7 +17,7 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
         [Fact]
         public async Task ShouldThrowDependencyValidationExceptionOnAddIfDuplicateKeyErrorOccursAndLogItAsync()
         {
-            //given
+            //given 
             string someMessage = GetRandomString();
             ApplicantsGroup randomGroup = CreateRandomGroup();
 
@@ -50,6 +51,49 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAss(
                     excpectedGroupDependencyValidationException))), Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
+
+
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnAddIfDbUpdateConcurrencyErrorOccursAndLogItAsync()
+        {
+            //given 
+            ApplicantsGroup randomGroup = CreateRandomGroup();
+
+            DbUpdateConcurrencyException dbUpdateConcurrencyException =
+                new DbUpdateConcurrencyException();
+
+            LockedGroupException lockedGroupException =
+                new LockedGroupException(dbUpdateConcurrencyException);
+
+            GroupDependencyException expectedGroupDependencyException =
+                 new GroupDependencyException(lockedGroupException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertGroupAsync(randomGroup)).ThrowsAsync(dbUpdateConcurrencyException);
+            //when
+            ValueTask<ApplicantsGroup> addGroupTask =
+                   this.groupService.AddGroupAsyc(randomGroup);
+
+            var actualGroupDependencyException =
+                await Assert.ThrowsAnyAsync<GroupDependencyException>(addGroupTask.AsTask);
+            //then
+
+            actualGroupDependencyException.
+                Should().
+                BeEquivalentTo(expectedGroupDependencyException);
+
+            this.storageBrokerMock.Verify(broker =>
+             broker.InsertGroupAsync(randomGroup), Times.Once);
+
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAss(
+                    expectedGroupDependencyException))), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

@@ -45,10 +45,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
 
             catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
             {
-                var lockedGroupException = 
-                    new LockedGroupException(dbUpdateConcurrencyException);
-
-                throw CreateAndLogDependencyException(lockedGroupException);
+                throw new NotImplementedException();
             }
 
             catch(DbUpdateException dbUpdateException)
