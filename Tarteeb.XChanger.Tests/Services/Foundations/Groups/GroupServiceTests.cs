@@ -21,6 +21,7 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Groups
         private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
 
+
         private readonly GroupService groupService;
 
         public GroupServiceTests()
