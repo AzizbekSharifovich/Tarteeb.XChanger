@@ -17,15 +17,19 @@ public partial class SpreadsheetService : ISpreadsheetService
     private readonly ISpreadSheetBroker spreadSheetBroker;
     private readonly ILoggingBroker loggingBroker;
 
-    public SpreadsheetService(ISpreadSheetBroker spreadSheetBroker, ILoggingBroker loggingBroker)
+    public SpreadsheetService(
+        ISpreadSheetBroker spreadSheetBroker,
+        ILoggingBroker loggingBroker)
     {
         this.spreadSheetBroker = spreadSheetBroker;
         this.loggingBroker = loggingBroker;
     }
+
     public List<ExternalApplicantModel> GetApplicants(MemoryStream stream) =>
     TryCatch(() =>
     {
         ValidateSpreadSheetNotNull(stream);
+
         return spreadSheetBroker.ReadExternalApplicants(stream);
     });
 
