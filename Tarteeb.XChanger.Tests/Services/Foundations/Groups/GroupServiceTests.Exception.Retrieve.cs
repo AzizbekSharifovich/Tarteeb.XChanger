@@ -2,6 +2,7 @@
 // Copyright (c) Tarteeb LLC.
 // Powering True Leadership
 //=================================
+
 using FluentAssertions;
 using Moq;
 using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions;
