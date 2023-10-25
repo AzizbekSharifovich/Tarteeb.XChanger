@@ -7,9 +7,9 @@ using Xeptions;
 
 namespace Tarteeb.XChanger.Models.Foundations.Groups.Exceptions
 {
-    public class NullGroupEexception : Xeption
+    public class NullGroupException : Xeption
     {
-        public NullGroupEexception()
+        public NullGroupException()
             : base("Group is null")
         { }
     }

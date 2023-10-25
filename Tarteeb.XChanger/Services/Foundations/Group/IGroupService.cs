@@ -6,11 +6,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicantsGroup = Tarteeb.XChanger.Models.Foundations.Groups.Group;
-namespace Tarteeb.XChanger.Services.Foundations.Group
+
+namespace Tarteeb.XChanger.Services.Foundations.Group;
+
+public interface IGroupService
 {
-    public interface IGroupService
-    {
-        ValueTask<ApplicantsGroup> AddGroupAsyc(ApplicantsGroup group);
-        IQueryable<ApplicantsGroup> RetrieveAllGroups();
-    }
+    ValueTask<ApplicantsGroup> AddGroupAsyc(ApplicantsGroup group);
+    IQueryable<ApplicantsGroup> RetrieveAllGroups();
 }

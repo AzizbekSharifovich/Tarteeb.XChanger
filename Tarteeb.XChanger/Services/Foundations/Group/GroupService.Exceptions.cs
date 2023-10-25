@@ -13,113 +13,112 @@ using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions.Categories;
 using Xeptions;
 using ApplicantsGroup = Tarteeb.XChanger.Models.Foundations.Groups.Group;
 
-namespace Tarteeb.XChanger.Services.Foundations.Group
+namespace Tarteeb.XChanger.Services.Foundations.Group;
+
+public partial class GroupService
 {
-    public partial class GroupService
+    private delegate ValueTask<ApplicantsGroup> ReturningGroupFunction();
+    private delegate IQueryable<ApplicantsGroup> ReturningGroupsFunction();
+
+    private async ValueTask<ApplicantsGroup> TryCatch(ReturningGroupFunction returningGroupFunction)
     {
-        private delegate ValueTask<ApplicantsGroup> ReturningGroupFunction();
-        private delegate IQueryable<ApplicantsGroup> ReturningGroupsFunction();
-
-        private async ValueTask<ApplicantsGroup> TryCatch(ReturningGroupFunction returningGroupFunction)
+        try
         {
-            try
-            {
-                return await returningGroupFunction();
-            }
-            catch (NullGroupEexception nullGroupException)
-            {
-               throw CreateAndLogValidationException(nullGroupException);
-            }
-            catch(InvalidGroupException invalidGroupException)
-            {
-                throw CreateAndLogValidationException(invalidGroupException);
-            }
-
-            catch(DuplicateKeyException duplicateKeyException)
-            {
-                var alreadyExistsGroupException =
-                     new AlreadyExistsGroupException(duplicateKeyException);
-
-                throw CreateAndLogDependencyValidationException(alreadyExistsGroupException);
-            }
-
-            catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
-            {
-                var lockedGroupException = 
-                    new LockedGroupException(dbUpdateConcurrencyException);
-
-                throw CreateAndLogDependencyException(lockedGroupException);
-            }
-
-            catch(DbUpdateException dbUpdateException)
-            {
-                var failedStorageGroupException = 
-                    new FailedStorageGroupException(dbUpdateException);
-
-                throw CreateAndLogDependencyException(failedStorageGroupException);
-            }
-
-            catch(Exception exception)
-            {
-                var failedServiceGroupException = 
-                    new FailedServiceGroupException(exception);
-
-                throw CreateServiceException(failedServiceGroupException);
-            }
+            return await returningGroupFunction();
+        }
+        catch (NullGroupException nullGroupException)
+        {
+           throw CreateAndLogValidationException(nullGroupException);
+        }
+        catch(InvalidGroupException invalidGroupException)
+        {
+            throw CreateAndLogValidationException(invalidGroupException);
         }
 
-        private IQueryable<ApplicantsGroup> TryCatch(ReturningGroupsFunction returningGroupsFunction)
+        catch(DuplicateKeyException duplicateKeyException)
         {
-            try
-            {
-                return returningGroupsFunction();
-            }
-            catch (Exception exception)
-            {
-                var failedServiceGroupException =
-                    new FailedServiceGroupException(exception);
+            var alreadyExistsGroupException =
+                 new AlreadyExistsGroupException(duplicateKeyException);
 
-                throw CreateServiceException(failedServiceGroupException);
-            }
-        }
-        private GroupDependencyException CreateAndLogDependencyException(Xeption xeption)
-        {
-            GroupDependencyException groupDependencyException =
-                new GroupDependencyException(xeption);
-
-            this.loggingBroker.LogError(groupDependencyException);
-
-            return groupDependencyException;
+            throw CreateAndLogDependencyValidationException(alreadyExistsGroupException);
         }
 
-        private GroupDependencyValidationException CreateAndLogDependencyValidationException(Xeption xeption)
+        catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
         {
-                     
-            var groupDependencyValidationException =
-                new GroupDependencyValidationException(xeption);
+            var lockedGroupException = 
+                new LockedGroupException(dbUpdateConcurrencyException);
 
-            this.loggingBroker.LogError(groupDependencyValidationException);
-
-            return groupDependencyValidationException;
+            throw CreateAndLogDependencyException(lockedGroupException);
         }
 
-        private GroupValidationException CreateAndLogValidationException(Xeption xeption)
+        catch(DbUpdateException dbUpdateException)
         {
-            var groupValidationException =
-                new GroupValidationException(xeption); 
+            var failedStorageGroupException = 
+                new FailedStorageGroupException(dbUpdateException);
 
-            this.loggingBroker.LogError(groupValidationException);
-
-            return groupValidationException;
+            throw CreateAndLogDependencyException(failedStorageGroupException);
         }
-        private GroupServiceException CreateServiceException(Xeption xeption)
+
+        catch(Exception exception)
         {
-            var groupServiceException =
-                new GroupServiceException(xeption);
+            var failedServiceGroupException = 
+                new FailedServiceGroupException(exception);
 
-            this.loggingBroker.LogError(groupServiceException);
-
-            return groupServiceException;
+            throw CreateServiceException(failedServiceGroupException);
         }
+    }
+
+    private IQueryable<ApplicantsGroup> TryCatch(ReturningGroupsFunction returningGroupsFunction)
+    {
+        try
+        {
+            return returningGroupsFunction();
+        }
+        catch (Exception exception)
+        {
+            var failedServiceGroupException =
+                new FailedServiceGroupException(exception);
+
+            throw CreateServiceException(failedServiceGroupException);
+        }
+    }
+    private GroupDependencyException CreateAndLogDependencyException(Xeption xeption)
+    {
+        GroupDependencyException groupDependencyException =
+            new GroupDependencyException(xeption);
+
+        this.loggingBroker.LogError(groupDependencyException);
+
+        return groupDependencyException;
+    }
+
+    private GroupDependencyValidationException CreateAndLogDependencyValidationException(Xeption xeption)
+    {
+                 
+        var groupDependencyValidationException =
+            new GroupDependencyValidationException(xeption);
+
+        this.loggingBroker.LogError(groupDependencyValidationException);
+
+        return groupDependencyValidationException;
+    }
+
+    private GroupValidationException CreateAndLogValidationException(Xeption xeption)
+    {
+        var groupValidationException =
+            new GroupValidationException(xeption); 
+
+        this.loggingBroker.LogError(groupValidationException);
+
+        return groupValidationException;
+    }
+    private GroupServiceException CreateServiceException(Xeption xeption)
+    {
+        var groupServiceException =
+            new GroupServiceException(xeption);
+
+        this.loggingBroker.LogError(groupServiceException);
+
+        return groupServiceException;
     }
 }
