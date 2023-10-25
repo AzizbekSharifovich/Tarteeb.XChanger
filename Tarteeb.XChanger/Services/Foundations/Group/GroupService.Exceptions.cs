@@ -76,10 +76,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Group
             }
             catch (Exception exception)
             {
-                var failedServiceGroupException =
-                    new FailedServiceGroupException(exception);
-
-                throw CreateServiceException(failedServiceGroupException);
+                throw new NotImplementedException();
             }
         }
         private GroupDependencyException CreateAndLogDependencyException(Xeption xeption)
