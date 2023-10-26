@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions.Categories;
+using Tarteeb.XChanger.Models.Orchestrations.ExternalApplicants.Exceptions;
 using Tarteeb.XChanger.Models.Proccesings.SpreadSheet.Exceptions;
 using Tarteeb.XChanger.Services.Orchestrations;
 
@@ -33,11 +34,11 @@ public class HomeController : ControllerBase
             
             return Ok();
         }
-        catch (SpreadSheetProccesingValidationException spreadSheetProccesingValidationException)
+        catch (ExternalApplicantOrchestrationValidationException externalApplicantOrchestrationValidationException)
         {
 
-            return BadRequest(spreadSheetProccesingValidationException.Message + " "
-                + spreadSheetProccesingValidationException.InnerException.Message);    
+            return BadRequest(externalApplicantOrchestrationValidationException.Message + " "
+                + externalApplicantOrchestrationValidationException.InnerException.Message);    
         }
         catch(FailedServiceSpreadSheetException failedServiceSpreadSheetException)
         {
