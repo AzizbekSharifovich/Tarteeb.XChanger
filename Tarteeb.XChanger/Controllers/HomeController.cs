@@ -4,8 +4,12 @@
 //=================================
 
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions;
+using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions.Categories;
+using Tarteeb.XChanger.Models.Proccesings.SpreadSheet.Exceptions;
 using Tarteeb.XChanger.Services.Orchestrations;
 
 namespace Tarteeb.XChanger.Controllers;
@@ -21,14 +25,24 @@ public class HomeController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Import(IFormFile file)
+    public async Task<IActionResult> Import(IFormFile file)
     {
-        var stream = new MemoryStream();
-        file.CopyTo(stream);
-        
-        stream.Position = 1;
-        orchestrationService.ProccesingImportRequest(stream);
+        try
+        {
+            await orchestrationService.ProccesingImportRequest(file);
+            
+            return Ok();
+        }
+        catch (SpreadSheetProccesingValidationException spreadSheetProccesingValidationException)
+        {
 
-        return Ok();
+            return BadRequest(spreadSheetProccesingValidationException.Message + " "
+                + spreadSheetProccesingValidationException.InnerException.Message);    
+        }
+        catch(FailedServiceSpreadSheetException failedServiceSpreadSheetException)
+        {
+            return BadRequest(failedServiceSpreadSheetException.Message + " "
+                + failedServiceSpreadSheetException.InnerException.Message);
+        }
     }
 }

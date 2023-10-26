@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 using Tarteeb.XChanger.Models.Proccesings.SpreadSheet.Exceptions;
@@ -20,10 +21,10 @@ public partial class SpreadsheetProccesingService : ISpreadsheetProccesingServic
         this.spreadsheetService = spreadsheetService;
         this.loggingBroker = loggingBroker;
     }
-    public List<ExternalApplicantModel> GetExternalApplicants(MemoryStream memoryStream) =>
+    public List<ExternalApplicantModel> GetExternalApplicants(IFormFile file) =>
     TryCatch(() =>
     {
-        List<ExternalApplicantModel> externalApplicantModels = spreadsheetService.GetApplicants(memoryStream);
+        List<ExternalApplicantModel> externalApplicantModels = spreadsheetService.GetApplicants(file);
 
         ValidateExternalApplicantNotEmpty(externalApplicantModels);
 

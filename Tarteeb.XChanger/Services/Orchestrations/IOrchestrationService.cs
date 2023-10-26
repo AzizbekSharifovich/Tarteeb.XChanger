@@ -3,12 +3,12 @@
 // Powering True Leadership
 //=================================
 
-using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Tarteeb.XChanger.Services.Orchestrations;
 
 public interface IOrchestrationService
 {
-    Task ProccesingImportRequest(MemoryStream stream);
+    Task ProccesingImportRequest(IFormFile file);
 }
