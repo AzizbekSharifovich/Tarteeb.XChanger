@@ -26,6 +26,7 @@ public partial class SpreadsheetService : ISpreadsheetService
     TryCatch(() =>
     {
         ValidateSpreadSheetNotNull(stream);
+
         return spreadSheetBroker.ReadExternalApplicants(stream);
     });
 
