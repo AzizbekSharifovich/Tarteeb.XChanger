@@ -3,6 +3,7 @@
 // Powering True Leadership
 //=================================
 
+using System;
 using System.Collections.Generic;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions.Categories;
@@ -26,10 +27,25 @@ namespace Tarteeb.XChanger.Services.Proccesings.SpreadSheet
                 throw CreateAndLogValidationException(spreadSheetValidationException.InnerException as Xeption);
             }
 
+            catch(SpreadSheetServiceException spreadSheetServiceException)
+            {
+                throw CreateAndLogServiceException(spreadSheetServiceException.InnerException as Xeption);
+            }
+
             catch(EmptyExternalApplicantException emptyExternalApplicantException)
             {
                 throw CreateAndLogValidationException(emptyExternalApplicantException);
             }
+        }
+
+        private SpreadSheetProccesingServiceException CreateAndLogServiceException(Xeption xeption)
+        {
+            var spreadSheetProccesingServiceException =
+                new SpreadSheetProccesingServiceException(xeption);
+
+            this.loggingBroker.LogError(spreadSheetProccesingServiceException);
+
+            return spreadSheetProccesingServiceException;
         }
 
         private SpreadSheetProccesingValidationException CreateAndLogValidationException(Xeption xeption)
