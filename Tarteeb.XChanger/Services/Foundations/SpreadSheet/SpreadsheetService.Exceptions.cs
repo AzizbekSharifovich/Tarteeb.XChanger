@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
+using Tarteeb.XChanger.Models.Foundations.Applicants.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions;
 using Xeptions;
 
