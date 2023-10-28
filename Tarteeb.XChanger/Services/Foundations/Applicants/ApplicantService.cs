@@ -21,7 +21,6 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
             this.storageBroker = storageBroker;
             this.loggingBroker = loggingBroker;
         }
-
         public async ValueTask<ExternalApplicantModel> InsertApplicantAsync(ExternalApplicantModel externalApplicantModel) =>
             await storageBroker.InsertExternalApplicantModelAsync(externalApplicantModel);
 
@@ -29,21 +28,17 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
         {
             return this.storageBroker.SelectExternalApplicantModelIdAsync(applicantId);
         }
-
         public IQueryable RetrieveAllApplicants()
         {
             throw new NotImplementedException();
         }
-
         public ValueTask<ExternalApplicantModel> ModifyExternalApplicantAsync(ExternalApplicantModel externalApplicantModel)
         {
             throw new NotImplementedException();
         }
-
         public async ValueTask<ExternalApplicantModel> RemoveApplicantAsync(Guid guid)
         {
             var selectedApp = await this.storageBroker.SelectExternalApplicantModelIdAsync(guid);
-            
             return await this.storageBroker.DeleteExternalApplicantModelAsync(selectedApp);
         }
     }
