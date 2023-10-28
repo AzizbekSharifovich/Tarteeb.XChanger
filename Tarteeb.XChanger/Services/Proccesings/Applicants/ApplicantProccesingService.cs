@@ -19,6 +19,6 @@ namespace Tarteeb.XChanger.Services.Proccesings.Applicants
         }
 
         public async ValueTask<ExternalApplicantModel> InsertApplicantAsync(ExternalApplicantModel externalApplicantModel) =>
-            await applicantService.InsertApplicantAsync(externalApplicantModel);
+            await applicantService.AddApplicantAsync(externalApplicantModel);
     }
 }

@@ -5,9 +5,11 @@
 using EFxceptions.Models.Exceptions;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 using Tarteeb.XChanger.Models.Foundations.Applicants.Exceptions;
+using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions;
 using Xeptions;
 
 namespace Tarteeb.XChanger.Services.Foundations.Applicants
@@ -15,6 +17,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
     public partial class ApplicantService
     {
         private delegate ValueTask<ExternalApplicantModel> ReturningApplicantFunction();
+        private delegate IQueryable<ExternalApplicantModel> ReturningApplicantsFunction();
 
         private async ValueTask<ExternalApplicantModel> TryCatch(ReturningApplicantFunction returningApplicantFunction)
         {
@@ -50,6 +53,20 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
                 var failedApplicantServiceException = new FailedApplicantServiceException(exception);
 
                 throw CreateAndLogServiceException(failedApplicantServiceException);
+            }
+        }
+        private IQueryable<ExternalApplicantModel> TryCatch(ReturningApplicantsFunction returningApplicantsFunction)
+        {
+            try
+            {
+                return returningApplicantsFunction();
+            }
+            catch (Exception exception)
+            {
+                var failedApplicantsServiceException =
+                    new FailedApplicantServiceException(exception);
+
+                throw CreateAndLogServiceException(failedApplicantsServiceException);
             }
         }
 

@@ -21,25 +21,14 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
             this.storageBroker = storageBroker;
             this.loggingBroker = loggingBroker;
         }
-        public async ValueTask<ExternalApplicantModel> InsertApplicantAsync(ExternalApplicantModel externalApplicantModel) =>
-            await storageBroker.InsertExternalApplicantModelAsync(externalApplicantModel);
+        public ValueTask<ExternalApplicantModel> AddApplicantAsync(ExternalApplicantModel externalApplicantModel) =>
+        TryCatch(async () =>
+        {
+            ValidateApplicantNotNull(externalApplicantModel);
+            return await storageBroker.InsertExternalApplicantModelAsync(externalApplicantModel);
+        });
 
-        public ValueTask<ExternalApplicantModel> RetrieveApplicantByIdAsync(Guid applicantId)
-        {
-            return this.storageBroker.SelectExternalApplicantModelIdAsync(applicantId);
-        }
-        public IQueryable RetrieveAllApplicants()
-        {
-            throw new NotImplementedException();
-        }
-        public ValueTask<ExternalApplicantModel> ModifyExternalApplicantAsync(ExternalApplicantModel externalApplicantModel)
-        {
-            throw new NotImplementedException();
-        }
-        public async ValueTask<ExternalApplicantModel> RemoveApplicantAsync(Guid guid)
-        {
-            var selectedApp = await this.storageBroker.SelectExternalApplicantModelIdAsync(guid);
-            return await this.storageBroker.DeleteExternalApplicantModelAsync(selectedApp);
-        }
+        public IQueryable<ExternalApplicantModel> RetrieveAllExternalApplicantModels() =>
+              TryCatch(() => storageBroker.RetrieveAllExternalApplicantModels());
     }
 }
