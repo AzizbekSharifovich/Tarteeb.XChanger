@@ -28,7 +28,8 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
         TryCatch(async () =>
         {
             ValidateApplicantNotNull(externalApplicantModel);
-            throw new NotImplementedException();
+            return await storageBroker.InsertExternalApplicantModelAsync(externalApplicantModel);
+
         });
 
         public IQueryable<ExternalApplicantModel> RetrieveAllExternalApplicantModels() =>
