@@ -6,18 +6,21 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Services.Foundations.Group;
 using ApplicantsGroup = Tarteeb.XChanger.Models.Foundations.Groups.Group;
 
 namespace Tarteeb.XChanger.Services.Proccesings.Group
 {
-    public class GroupProccesingService : IGroupProccesingService
+    public partial class GroupProccesingService : IGroupProccesingService
     {
         private readonly IGroupService groupService;
+        private readonly ILoggingBroker loggingBroker;
 
-        public GroupProccesingService(IGroupService groupService)
+        public GroupProccesingService(IGroupService groupService, ILoggingBroker loggingBroker)
         {
             this.groupService = groupService;
+            this.loggingBroker = loggingBroker;
         }
 
         public async ValueTask<ApplicantsGroup> EnsureGroupExistsByName(string name)
@@ -27,7 +30,8 @@ namespace Tarteeb.XChanger.Services.Proccesings.Group
             return maybeGroup is null ? await AddGroupAsync(name) : maybeGroup;
         }
 
-        private async ValueTask<ApplicantsGroup> AddGroupAsync(string name)
+        private ValueTask<ApplicantsGroup> AddGroupAsync(string name) =>
+        TryCatch(async() =>
         {
             ApplicantsGroup group = new ApplicantsGroup();
 
@@ -35,11 +39,11 @@ namespace Tarteeb.XChanger.Services.Proccesings.Group
             group.GroupName = name;
 
             return await groupService.AddGroupAsyc(group);
-        }
+        });
 
         public ApplicantsGroup RetrieveGroupByName(string name)
         {
-            IQueryable<Models.Foundations.Groups.Group> Groups = groupService.RetrieveAllGroups();
+            IQueryable<ApplicantsGroup> Groups = groupService.RetrieveAllGroups();
             ApplicantsGroup group = 
                 Groups.FirstOrDefault(groupName => groupName.GroupName == name);
 
