@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 using Tarteeb.XChanger.Brokers;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
@@ -22,18 +23,25 @@ public partial class SpreadsheetService : ISpreadsheetService
         this.spreadSheetBroker = spreadSheetBroker;
         this.loggingBroker = loggingBroker;
     }
-    public List<ExternalApplicantModel> GetApplicants(MemoryStream stream) =>
+    public List<ExternalApplicantModel> GetApplicants(IFormFile file) =>
     TryCatch(() =>
     {
-        ValidateSpreadSheetNotNull(stream);
+        MemoryStream stream = ValidateSpreadSheetNotNull(file);
+
         return spreadSheetBroker.ReadExternalApplicants(stream);
     });
 
-    private static void ValidateSpreadSheetNotNull(MemoryStream stream)
+    private static MemoryStream ValidateSpreadSheetNotNull(IFormFile file)
     {
-        if (stream is null)
+        if (file is null)
         {
             throw new NullSpreadSheetException();
         }
+
+        MemoryStream memoryStream = new MemoryStream();
+        file.CopyTo(memoryStream);
+        memoryStream.Position = 1;
+
+        return memoryStream;
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 using Tarteeb.XChanger.Models.Foundations.Groups;
@@ -37,10 +38,10 @@ public partial class OrchestrationService : IOrchestrationService
         this.loggingBroker = loggingBroker;
     }
 
-    public Task ProccesingImportRequest(MemoryStream stream) =>
+    public Task ProccesingImportRequest(IFormFile file) =>
     TryCatch(async () =>
     {
-        this.validExternalApplicants = spreadsheetProccesingService.GetExternalApplicants(stream);
+        this.validExternalApplicants = spreadsheetProccesingService.GetExternalApplicants(file);
 
         foreach (var externalApplicant in validExternalApplicants)
         {

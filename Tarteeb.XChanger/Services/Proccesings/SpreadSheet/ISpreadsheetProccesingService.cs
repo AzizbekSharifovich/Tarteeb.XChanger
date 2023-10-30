@@ -4,12 +4,12 @@
 //=================================
 
 using System.Collections.Generic;
-using System.IO;
+using Microsoft.AspNetCore.Http;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 
 namespace Tarteeb.XChanger.Services.Proccesings.SpreadSheet;
 
 public interface ISpreadsheetProccesingService
 {
-    List<ExternalApplicantModel> GetExternalApplicants(MemoryStream memoryStream);
+    List<ExternalApplicantModel> GetExternalApplicants(IFormFile file);
 }

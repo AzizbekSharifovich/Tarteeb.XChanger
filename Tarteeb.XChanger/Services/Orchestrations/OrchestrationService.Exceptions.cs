@@ -35,7 +35,7 @@ namespace Tarteeb.XChanger.Services.Orchestrations
             
             this.loggingBroker.LogError(externalApplicantOrchestrationValidationException);
 
-            throw externalApplicantOrchestrationValidationException;
+            return externalApplicantOrchestrationValidationException;
         }
     }
 }
