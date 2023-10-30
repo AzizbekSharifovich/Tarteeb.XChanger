@@ -38,10 +38,10 @@ public partial class OrchestrationService : IOrchestrationService
         this.loggingBroker = loggingBroker;
     }
 
-    public Task ProccesingImportRequest(IFormFile file) =>
+    public Task ProccesingImportRequest(IFormFile formFile) =>
     TryCatch(async () =>
     {
-        this.validExternalApplicants = spreadsheetProccesingService.GetExternalApplicants(file);
+        this.validExternalApplicants = spreadsheetProccesingService.GetExternalApplicants(formFile);
 
         foreach (var externalApplicant in validExternalApplicants)
         {

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions.Categories;
 using Tarteeb.XChanger.Models.Orchestrations.ExternalApplicants.Exceptions;
+using Tarteeb.XChanger.Models.Orchestrations.Groups;
 using Tarteeb.XChanger.Models.Proccesings.SpreadSheet.Exceptions;
 using Tarteeb.XChanger.Services.Orchestrations;
 
@@ -26,11 +27,11 @@ public class HomeController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Import(IFormFile file)
+    public async Task<IActionResult> Import(IFormFile formFile)
     {
         try
         {
-            await orchestrationService.ProccesingImportRequest(file);
+            await orchestrationService.ProccesingImportRequest(formFile);
             
             return Ok();
         }
@@ -40,10 +41,26 @@ public class HomeController : ControllerBase
             return BadRequest(externalApplicantOrchestrationValidationException.Message + " "
                 + externalApplicantOrchestrationValidationException.InnerException.Message);    
         }
-        catch(FailedServiceSpreadSheetException failedServiceSpreadSheetException)
+        catch(GroupOchrestartionValidationException groupOchrestartionValidationException)
         {
-            return BadRequest(failedServiceSpreadSheetException.Message + " "
-                + failedServiceSpreadSheetException.InnerException.Message);
+            return BadRequest(groupOchrestartionValidationException.Message + " " +
+                groupOchrestartionValidationException.InnerException.Message);
+        }
+        catch(GroupOchrestartionDependencyException groupOchrestartionDependencyException)
+        {
+            return BadRequest(groupOchrestartionDependencyException.Message + " " +
+                groupOchrestartionDependencyException.InnerException.Message);
+        }
+        catch(GroupOrchestartionDependencyValidationException groupOrchestartionDependencyValidationException)
+        {
+            return BadRequest(groupOrchestartionDependencyValidationException.Message + " " +
+                groupOrchestartionDependencyValidationException.InnerException.Message);
+        }
+        //exceptions
+        catch(GroupOrchestrationServiceException groupOrchestrationServiceException)
+        {
+            return BadRequest(groupOrchestrationServiceException.Message + " " +
+                groupOrchestrationServiceException.InnerException.Message);
         }
     }
 }
