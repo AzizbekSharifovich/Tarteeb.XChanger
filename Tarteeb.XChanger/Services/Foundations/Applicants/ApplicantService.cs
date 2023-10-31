@@ -27,7 +27,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
         public ValueTask<ExternalApplicantModel> AddApplicantAsync(ExternalApplicantModel externalApplicantModel) =>
         TryCatch(async () =>
         {
-            ValidateApplicantNotNull(externalApplicantModel);
+        
             return await storageBroker.InsertExternalApplicantModelAsync(externalApplicantModel);
 
         });

@@ -4,12 +4,14 @@
 //=================================
 
 using Moq;
+using System.Linq.Expressions;
 using Tarteeb.XChanger.Brokers.DateTimes;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Brokers.Storages;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 using Tarteeb.XChanger.Services.Foundations.Applicants;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace Tarteeb.XChanger.Tests.Services.Foundations.Applicants
 {
@@ -33,6 +35,10 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Applicants
         }
         private ExternalApplicantModel CreateRandomApplicant() =>
             CreateApplicantFiller().Create();
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
+        
         private Filler<ExternalApplicantModel> CreateApplicantFiller()
         {
             var filler = new Filler<ExternalApplicantModel>();

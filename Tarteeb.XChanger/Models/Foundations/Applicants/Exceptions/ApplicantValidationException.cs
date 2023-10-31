@@ -8,9 +8,9 @@ using Xeptions;
 
 namespace Tarteeb.XChanger.Models.Foundations.Applicants.Exceptions
 {
-    public class ApplicantValidationError: Xeption
+    public class ApplicantValidationException: Xeption
     {
-        public ApplicantValidationError(Exception innerException) 
+        public ApplicantValidationException(Exception innerException) 
         :base("Applicant validation error ocured,fix the error and try again",innerException)
         { }
     }

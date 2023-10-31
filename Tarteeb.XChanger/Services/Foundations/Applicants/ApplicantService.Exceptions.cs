@@ -79,10 +79,10 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
             return applicantDependencyValidationException;
         }
 
-        private ApplicantValidationError CreateAndLogValidationException(Xeption exception)
+        private ApplicantValidationException CreateAndLogValidationException(Xeption exception)
         {
             var applicantValidationException =
-                new ApplicantValidationError(exception);
+                new ApplicantValidationException(exception);
             this.loggingBroker.LogError(applicantValidationException);
 
             return applicantValidationException;
