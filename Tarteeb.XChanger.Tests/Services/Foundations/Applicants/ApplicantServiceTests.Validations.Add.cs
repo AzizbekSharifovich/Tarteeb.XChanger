@@ -60,19 +60,19 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Applicants
 
             invalidApplicantException.AddData(
             key: nameof(ExternalApplicantModel.FirstName),
-            values: "Id is required");
+            values: "Text is required");
 
             invalidApplicantException.AddData(
             key: nameof(ExternalApplicantModel.LastName),
-            values: "Id is required");
+            values: "Text is required");
 
             invalidApplicantException.AddData(
             key: nameof(ExternalApplicantModel.PhoneNumber),
-            values: "Id is required");
+            values: "Text is required");
 
             invalidApplicantException.AddData(
             key: nameof(ExternalApplicantModel.Email),
-            values: "Id is required");
+            values: "Text is required");
 
             var expectedApplicantValidationException =
              new ApplicantValidationException(invalidApplicantException);
