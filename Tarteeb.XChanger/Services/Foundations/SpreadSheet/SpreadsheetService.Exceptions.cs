@@ -9,6 +9,7 @@ using System.Linq;
 using EFxceptions.Models.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
+using Tarteeb.XChanger.Models.Foundations.Applicants.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.SpreadSheets.Exceptions.Categories;
 using Xeptions;
