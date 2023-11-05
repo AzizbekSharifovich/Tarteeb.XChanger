@@ -4,12 +4,14 @@
 //=================================
 using EFxceptions.Models.Exceptions;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Tarteeb.XChanger.Models.Foundations.Applicants;
 using Tarteeb.XChanger.Models.Foundations.Applicants.Exceptions;
 using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions;
+using Tarteeb.XChanger.Models.Foundations.Groups.Exceptions.Categories;
 using Xeptions;
 
 namespace Tarteeb.XChanger.Services.Foundations.Applicants
@@ -42,6 +44,10 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
 
                 throw CreateAndALogDependencyValidationException(alreadyExistsApplicantException);
             }
+            catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
+            {
+                throw new NotImplementedException();
+            }
             catch (SqlException sqlException)
             {
                 var failedApplicantStorageException = new FailedApplicantStorageException(sqlException);
@@ -69,7 +75,15 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
                 throw CreateAndLogServiceException(failedApplicantsServiceException);
             }
         }
+        private ApplicantDependencyException CreateAndLogDependencyException(Xeption xeption)
+        {
+            ApplicantDependencyException applicantDependencyException =
+                new ApplicantDependencyException(xeption);
 
+            this.loggingBroker.LogError(applicantDependencyException);
+
+            return applicantDependencyException;
+        }
         private ApplicantDependencyValidationException CreateAndALogDependencyValidationException(Xeption exception)
         {
             var applicantDependencyValidationException =
