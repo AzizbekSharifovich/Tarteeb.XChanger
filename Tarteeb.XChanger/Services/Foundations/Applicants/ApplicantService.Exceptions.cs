@@ -46,7 +46,10 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
             }
             catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
             {
-                throw new NotImplementedException();
+                var lockedApplicantException =
+                   new LockedApplicantException(dbUpdateConcurrencyException);
+
+                throw CreateAndLogDependencyException(lockedApplicantException);
             }
             catch (SqlException sqlException)
             {
