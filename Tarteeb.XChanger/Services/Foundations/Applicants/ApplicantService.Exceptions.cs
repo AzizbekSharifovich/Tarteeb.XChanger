@@ -79,10 +79,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
             }
             catch (Exception exception)
             {
-                var failedApplicantsServiceException =
-                    new FailedApplicantServiceException(exception);
-
-                throw CreateAndLogServiceException(failedApplicantsServiceException);
+                throw new NotImplementedException();
             }
         }
         private ApplicantDependencyException CreateAndLogDependencyException(Xeption xeption)
