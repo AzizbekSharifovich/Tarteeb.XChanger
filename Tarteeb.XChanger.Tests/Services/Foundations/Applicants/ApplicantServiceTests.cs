@@ -3,8 +3,10 @@
 // Powering True Leadership
 //=================================
 
+using Microsoft.Data.SqlClient;
 using Moq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using Tarteeb.XChanger.Brokers.DateTimes;
 using Tarteeb.XChanger.Brokers.Loggings;
 using Tarteeb.XChanger.Brokers.Storages;
@@ -33,16 +35,24 @@ namespace Tarteeb.XChanger.Tests.Services.Foundations.Applicants
                dateTimeBroker: this.dateTimeBrokerMock.Object,
                loggingBroker: this.loggingBrokerMock.Object);
         }
+
+        private string GetRandomString() =>
+           new MnemonicString().GetValue();
         private ExternalApplicantModel CreateRandomApplicant() =>
             CreateApplicantFiller().Create();
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
-        
+
         private Filler<ExternalApplicantModel> CreateApplicantFiller()
         {
             var filler = new Filler<ExternalApplicantModel>();
             return filler;
         }
+
+        private Expression<Func<Xeption, bool>> SameExceptionAss(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
+        private static SqlException GetSqlError() =>
+        (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
     }
 }

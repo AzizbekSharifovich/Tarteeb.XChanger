@@ -8,10 +8,10 @@ using Xeptions;
 
 namespace Tarteeb.XChanger.Models.Foundations.Applicants.Exceptions
 {
-    public class ApplicantProcessingValidationException :Xeption
+    public class LockedApplicantException :Xeption
     {
-        public ApplicantProcessingValidationException(Exception innerException)
-            : base("Applicant processing validation error ocured,fix error and try again",innerException) 
+        public LockedApplicantException(Exception exception)
+            : base("Applicant is busy",exception) 
         { }
     }
 }

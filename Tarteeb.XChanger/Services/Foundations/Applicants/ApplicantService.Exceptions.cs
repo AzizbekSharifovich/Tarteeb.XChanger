@@ -37,10 +37,7 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
 
             catch (DuplicateKeyException duplicateKeyException)
             {
-                var alreadyExistsApplicantException =
-                    new ApplicantAlreadyExistsException(duplicateKeyException);
-
-                throw CreateAndALogDependencyValidationException(alreadyExistsApplicantException);
+                throw new NotImplementedException();
             }
             catch (SqlException sqlException)
             {
