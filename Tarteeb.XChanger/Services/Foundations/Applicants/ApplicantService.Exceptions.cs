@@ -51,6 +51,10 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
 
                 throw CreateAndLogDependencyException(lockedApplicantException);
             }
+            catch (DbUpdateException dbUpdateException)
+            {
+                throw new NotImplementedException();
+            }
             catch (SqlException sqlException)
             {
                 var failedApplicantStorageException = new FailedApplicantStorageException(sqlException);
