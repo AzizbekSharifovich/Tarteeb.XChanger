@@ -66,7 +66,9 @@ namespace Tarteeb.XChanger.Services.Foundations.Applicants
             }
             catch (Exception exception)
             {
-                throw new NotImplementedException();
+                var failedApplicantServiceException = new FailedApplicantServiceException(exception);
+
+                throw CreateAndLogServiceException(failedApplicantServiceException);
             }
         }
         private IQueryable<ExternalApplicantModel> TryCatch(ReturningApplicantsFunction returningApplicantsFunction)
